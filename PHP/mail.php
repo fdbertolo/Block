@@ -23,3 +23,5 @@ $Fields .= "\n";
 
 // send email
 $success = mail($EmailTo,  $Title,  $Fields, "From:".$email);
+
+echo $name . "sos un capo y tu mail es" . $email;
