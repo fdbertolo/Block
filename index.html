@@ -7,6 +7,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>Block</title>
 	<link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+	<style> #success, #error {display: none;}</style>
 </head>
 
 <body>
@@ -310,7 +311,7 @@
 			</div>
 
 			<div class="lg:w-1/2 md:w-2/3 mx-auto">
-				<div class="flex flex-wrap -m-2" action="PHP/mail.php" method="post">
+				<form class="flex flex-wrap -m-2" action="PHP/mail.php" method="post" novalidate="novalidate">
 					<div class="p-2 w-1/2">
 						<div class="relative">
 							<label class="leading-7 text-sm text-gray-600">Name</label>
@@ -352,7 +353,7 @@
 						<a class="leading-normal my-2" href="tel:+8618998940800">
 							Phone: +86 18998940800</a>
 					</div>
-				</div>
+				</form>
 			</div>
 		</div>
 	</section>
