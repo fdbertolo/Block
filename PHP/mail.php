@@ -1,27 +1,32 @@
 <?php
-$name = $_POST["name"];
-$email = $_POST["email"];
-$message = $_POST["message"];
+if(isset($_POST['email'])) {
+
+<bold>// Debes editar las próximas dos líneas de código de acuerdo con tus preferencias</bold>
+$email_to = "fdbertolo@gmail.com";
+$email_subject = "Contacto desde el sitio web";
+
+<bold>// Aquí se deberían validar los datos ingresados por el usuario</bold>
+if(!isset($_POST['name']) ||
+!isset($_POST['email']) ||
+!isset($_POST['message']) || {
+
+echo "<b>Ocurrió un error y el formulario no ha sido enviado. </b><br />";
+echo "Por favor, vuelva atrás y verifique la información ingresada<br />";
+die();
+}
+
+$email_message = "Detalles del formulario de contacto:\n\n";
+$email_message .= "Nombre: " . $_POST['name'] . "\n";
+$email_message .= "E-mail: " . $_POST['email'] . "\n";
+$email_message .= "Comentarios: " . $_POST['message'] . "\n\n";
 
 
-$EmailTo = "fdbertolo@gmail.com";
-$Title = "New Message Received";
+<bold>// Ahora se envía el e-mail usando la función mail() de PHP</bold>
+$headers = 'From: '.$email."\r\n".
+'Reply-To: '.$email."\r\n" .
+'X-Mailer: PHP/' . phpversion();
+@mail($email_to, $email_subject, $email_message, $headers);
 
-// prepare email body text
-$Fields .= "Name: ";
-$Fields .= $name;
-$Fields .= "\n";
-
-$Fields.= "Email: ";
-$Fields .= $email;
-$Fields .= "\n";
-
-$Fields .= "Message: ";
-$Fields .= $message;
-$Fields .= "\n";
-
-
-// send email
-$success = mail($EmailTo,  $Title,  $Fields, "From:".$email);
-
-echo $name . "sos un capo y tu mail es" . $email;
+echo "¡El formulario se ha enviado con éxito!";
+}
+?>
