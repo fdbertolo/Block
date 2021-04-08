@@ -29,3 +29,4 @@ $Fields .= "\n";
 // send email
 $success = mail($EmailTo,  $Title,  $Fields, "From:".$email);
 
+?>
