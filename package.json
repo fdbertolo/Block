@@ -1,14 +1,24 @@
 {
-  "name": "contact-form-tailwind-css",
-  "version": "1.0.0",
-  "main": "index.js",
-  "directories": {
-    "lib": "lib"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC",
-  "description": ""
+	"name": "block-web",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"dev": "vite",
+		"build": "vite build"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://Rolo_ok@bitbucket.org/fleetstudio/block-web.git"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"homepage": "https://bitbucket.org/fleetstudio/block-web#readme",
+	"devDependencies": {
+		"autoprefixer": "^10.2.5",
+		"postcss": "^8.2.9",
+		"tailwindcss": "^2.1.1",
+		"vite": "^2.1.5"
+	}
 }

@@ -1,0 +1,90 @@
+
+defaults: &defaults
+  working_directory: ~/app
+  docker:
+    - image: circleci/node:lts
+
+version: 2.1
+jobs:
+  prepare:
+    <<: *defaults
+    steps:
+      - checkout
+  build:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/app
+      - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
+      - run:
+          name: Build SH
+          no_output_timeout: 30m
+          command: |
+            set -e
+            sh deploy.sh
+            echo "npm..."
+            npm install
+            echo "Building..."
+            npm run build
+      - persist_to_workspace:
+          root: .
+          paths:
+            - build
+  deploy:
+    docker:
+      - image: cibuilds/aws:1.16.96
+    working_directory: ~/app
+    steps:
+      - attach_workspace:
+          at: ~/app
+      - deploy:
+          name: Deploy to PRD S3
+          command: |
+            aws s3 sync build/ s3://eblockit.com --delete 
+            aws cloudfront create-invalidation --distribution-id E1W23A6O62GM6C --paths "/*"
+  deploydev:
+    docker:
+      - image: cibuilds/aws:1.16.96
+    working_directory: ~/app
+    steps:
+      - attach_workspace:
+          at: ~/app
+      - deploy:
+          name: Deploy to DEV S3
+          command: |
+            aws s3 sync build/ s3://dev.eblockit.com --delete 
+
+
+workflows:
+  version: 2
+  build_and_deploy:
+    jobs:
+      - prepare: 
+          filters:
+            branches:
+              only: 
+              - master
+              - develop
+      - build:
+          requires:
+            - prepare
+          filters:
+            branches:
+              only: 
+              - master
+              - develop
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only: 
+              - master
+      - deploydev:
+          requires:
+            - build
+          filters:
+            branches:
+              only: 
+              - develop
